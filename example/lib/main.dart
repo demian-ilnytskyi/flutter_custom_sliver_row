@@ -26,42 +26,40 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: CustomScrollView(
-          slivers: [
-            SliverRow(
-              chilrden: [
-                const SliverRowModel(
-                  child: SliverFillRemaining(
-                    child: Center(
-                      child: Text('test 1'),
-                    ),
-                  ),
-                  percent: 1 / 3,
-                ),
-                const SliverRowModel(
-                  child: SliverFillRemaining(
-                    child: Center(
-                      child: Text('test 2'),
-                    ),
+      body: CustomScrollView(
+        slivers: [
+          SliverRow(
+            chilrden: [
+              const SliverRowModel(
+                child: SliverFillRemaining(
+                  child: Center(
+                    child: Text('test 1'),
                   ),
                 ),
-                SliverRowModel(
-                  child: SliverFillRemaining(
-                    child: Center(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'test 3',
-                        ),
+                size: 200,
+              ),
+              const SliverRowModel(
+                child: SliverFillRemaining(
+                  child: Center(
+                    child: Text('test 2'),
+                  ),
+                ),
+              ),
+              SliverRowModel(
+                child: SliverFillRemaining(
+                  child: Center(
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'test 3',
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
