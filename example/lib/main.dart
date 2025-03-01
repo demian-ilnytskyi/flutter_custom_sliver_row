@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
                       child: Text('test 1'),
                     ),
                   ),
-                  size: 200,
+                  percent: 1 / 3,
                 ),
                 const SliverRowModel(
                   child: SliverFillRemaining(

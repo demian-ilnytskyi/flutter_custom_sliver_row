@@ -21,10 +21,14 @@ class SliverRowModel {
     required this.child,
     this.percent,
     this.size,
-  }) : assert(
+  })  : assert(
           // If 'percent' is not null, it must be > 0 and < 1.
           percent == null || (percent > 0 && percent < 1),
           'percent must be greater than 0 and less than 1 if it is provided.',
+        ),
+        assert(
+          !(percent != null && size != null),
+          'You cannot provide both percent and size at the same time.',
         );
 
   /// The widget to be displayed in this row.
@@ -66,7 +70,16 @@ class SliverRow extends MultiChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, RenderSliverRow renderObject) {}
+  void updateRenderObject(BuildContext context, RenderSliverRow renderObject) {
+    renderObject._sizes = List.generate(
+      chilrden.length,
+      (index) {
+        final item = chilrden.elementAt(index);
+        return _SliverRowSize(percent: item.percent, size: item.size);
+      },
+    );
+    renderObject.markNeedsLayout(); // Mark needs layout when sizes change
+  }
 }
 
 class _SliverRowSize {
@@ -80,10 +93,14 @@ class _SliverRowSize {
   const _SliverRowSize({
     this.percent,
     this.size,
-  }) : assert(
+  })  : assert(
           // If 'percent' is not null, it must be > 0 and < 1.
           percent == null || (percent > 0 && percent < 1),
           'percent must be greater than 0 and less than 1 if it is provided.',
+        ),
+        assert(
+          !(percent != null && size != null),
+          'You cannot provide both percent and size at the same time.',
         );
 
   /// The fraction of the available width occupied by [child].
@@ -119,9 +136,9 @@ class RenderSliverRow extends RenderSliver
   // Constructor to initialize the width percentage for the left widget
   RenderSliverRow({required List<_SliverRowSize> sizes}) : _sizes = sizes;
 
-  final List<_SliverRowSize> _sizes;
+  List<_SliverRowSize> _sizes;
 
-  List<_ChildSliverState> childrenState = const [];
+  List<_ChildSliverState>? _childrenState; // Cached children state
 
   // Sets up the parent data for the sliver children
   @override
@@ -136,73 +153,57 @@ class RenderSliverRow extends RenderSliver
   void performLayout() {
     if (firstChild == null) {
       geometry = SliverGeometry.zero;
+      _childrenState = const []; // Update cached state to empty list
       return;
     }
 
-    // Calculate the size for the left child based on the width percentage
-    // final leftSize = constraints.crossAxisExtent * _leftWidthPercent;
-    // final remainingWidth = constraints.crossAxisExtent - leftSize;
+    final childsState =
+        _getChildsState(); // Calculate children state in performLayout
+    double currentSliverGetScreenWidth = 0;
 
-    if (firstChild != null) {
-      final childsState = _childsState;
-      double currentSliverGetScreenWidth = 0;
-
-      for (var childState in childsState) {
-        childState.sliver.layout(
-          constraints.copyWith(crossAxisExtent: childState.size),
-          parentUsesSize: true,
-        );
-
-        final parentData = childState.sliver.parentData;
-
-        if (parentData is _SliverRowParentData) {
-          parentData.paintOffset = Offset(
-            currentSliverGetScreenWidth,
-            0,
-          );
-        }
-
-        currentSliverGetScreenWidth += childState.size ?? 0;
-      }
-      final paintExtent =
-          min(constraints.remainingPaintExtent, currentSliverGetScreenWidth);
-
-      geometry = SliverGeometry(
-        scrollExtent: currentSliverGetScreenWidth,
-        paintExtent: paintExtent,
-        layoutExtent: paintExtent,
-        maxPaintExtent: currentSliverGetScreenWidth,
-        cacheExtent: currentSliverGetScreenWidth,
+    for (var childState in childsState) {
+      childState.sliver.layout(
+        constraints.copyWith(crossAxisExtent: childState.size),
+        parentUsesSize: true,
       );
-      childrenState = childsState;
+
+      final parentData = childState.sliver.parentData;
+
+      if (parentData is _SliverRowParentData) {
+        parentData.paintOffset = Offset(
+          currentSliverGetScreenWidth,
+          0,
+        );
+      }
+
+      currentSliverGetScreenWidth += childState.size ?? 0;
     }
+    final paintExtent = min(
+      constraints.remainingPaintExtent,
+      currentSliverGetScreenWidth,
+    );
+
+    geometry = SliverGeometry(
+      scrollExtent: currentSliverGetScreenWidth,
+      paintExtent: paintExtent,
+      layoutExtent: paintExtent,
+      maxPaintExtent: currentSliverGetScreenWidth,
+      cacheExtent: currentSliverGetScreenWidth,
+    );
+    _childrenState = childsState; // Cache the calculated state
   }
 
   // Paint the children to the canvas
   @override
   void paint(PaintingContext context, Offset offset) {
     if (!(geometry?.visible ?? false)) return;
+    if (_childrenState == null) return; // Ensure childrenState is not null
 
-    // Paint the left child first, then the right child with a horizontal offset
-    // final leftParentData = left.parentData! as _SliverRowParentData;
-    // final rightParentData = right.parentData! as _SliverRowParentData;
-
-    if (firstChild != null) {
-      RenderSliver? currentSliver = firstChild!;
-
-      for (var i = 0; i < childCount; i++) {
-        if (currentSliver == null) break;
-        final parentData = currentSliver.parentData;
-        if (parentData is _SliverRowParentData) {
-          context.paintChild(currentSliver, offset + parentData.paintOffset);
-        }
-
-        currentSliver = childAfter(currentSliver);
+    for (var childState in _childrenState!) {
+      final parentData = childState.sliver.parentData;
+      if (parentData is _SliverRowParentData) {
+        context.paintChild(childState.sliver, offset + parentData.paintOffset);
       }
-
-      // context
-      //   ..paintChild(left, offset + leftParentData.paintOffset)
-      //   ..paintChild(right, offset + rightParentData.paintOffset);
     }
   }
 
@@ -212,8 +213,12 @@ class RenderSliverRow extends RenderSliver
     required double mainAxisPosition,
     required double crossAxisPosition,
   }) {
+    if (_childrenState == null)
+      return false; // Ensure childrenState is not null
+
     double currentSliverGetScreenWidth = 0;
-    for (final child in childrenState) {
+    for (final child in _childrenState!) {
+      // Use cached children state
       if (child.sliver.geometry?.visible ?? false) {
         final adjustedCrossAxisPosition =
             crossAxisPosition - currentSliverGetScreenWidth;
@@ -224,7 +229,7 @@ class RenderSliverRow extends RenderSliver
           mainAxisPosition: mainAxisPosition,
           crossAxisPosition: adjustedCrossAxisPosition,
         )) {
-          return true;
+          return true; // Return true immediately if hit
         }
         currentSliverGetScreenWidth += child.size ?? 0;
       }
@@ -237,7 +242,8 @@ class RenderSliverRow extends RenderSliver
   void applyPaintTransform(RenderSliver child, Matrix4 transform) =>
       child.sliverRow.applyPaintTransform(transform);
 
-  List<_ChildSliverState> get _childsState {
+  List<_ChildSliverState> _getChildsState() {
+    // Make this private and called from performLayout
     final childsState = <_ChildSliverState>[];
     RenderSliver? currentSliver = firstChild;
     final fullAvailableWidth = constraints.crossAxisExtent;
