@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sliver_row:
+  custom_sliver_row:
     path: ../
 
 dev_dependencies:

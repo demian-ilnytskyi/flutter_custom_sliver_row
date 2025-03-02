@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sliver_row/sliver_row.dart';
+import 'package:custom_sliver_row/custom_sliver_row.dart';
 
 void main() {
   runApp(const MyApp());

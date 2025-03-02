@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sliver_row/render_sliver_row.dart';
+import 'package:custom_sliver_row/render_sliver_row.dart';
 
 void main() {
   test('Assert is triggered when children size exceeds available width', () {
