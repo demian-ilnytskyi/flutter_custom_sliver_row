@@ -29,33 +29,56 @@ class HomePage extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverRow(
-            chilrden: [
-              const SliverRowModel(
-                child: SliverFillRemaining(
-                  child: Center(
-                    child: Text('test 1'),
-                  ),
-                ),
-                size: 200,
-              ),
-              const SliverRowModel(
-                child: SliverFillRemaining(
-                  child: Center(
-                    child: Text('test 2'),
-                  ),
-                ),
-              ),
+            children: [
               SliverRowModel(
-                child: SliverFillRemaining(
-                  child: Center(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'test 3',
+                child: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.yellow,
+                        border: Border.all(),
+                      ),
+                      child: Center(
+                        child: Text('example_$index'),
                       ),
                     ),
                   ),
                 ),
+                percent: 0.3,
+              ),
+              SliverRowModel(
+                child: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        border: Border.all(),
+                      ),
+                      child: Center(
+                        child: Text('example_$index'),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SliverRowModel(
+                child: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.greenAccent,
+                        border: Border.all(),
+                      ),
+                      child: Center(
+                        child: Text('example_$index'),
+                      ),
+                    ),
+                  ),
+                ),
+                percent: 0.5,
               ),
             ],
           ),

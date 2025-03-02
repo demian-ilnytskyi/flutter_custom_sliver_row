@@ -1,39 +1,11 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# SliverRow
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+<p align="center">
+  <a href="https://pub.dev/packages/sliver_row"><img src="https://img.shields.io/pub/v/sliver_row" alt="pub"></a>
+  <a href="https://app.codecov.io/github/DemienIlnutskiy/flutter_sliver_row"><img src="https://img.shields.io/codecov/c/github/DemienIlnutskiy/flutter_sliver_row" alt="pub"></a>
+  <a href="https://github.com/DemienIlnutskiy/flutter_sliver_row/actions/workflows/generate_code_coverate.yaml"><img src="https://img.shields.io/github/actions/workflow/status/DemienIlnutskiy/flutter_sliver_row/generate_code_coverate.yaml?event=push&branch=main&label=tests&logo=github" alt="tests"></a>
+  <a href="https://github.com/DemienIlnutskiy/flutter_sliver_row/actions/workflows/ci.yaml">
+    <img src="https://img.shields.io/github/actions/workflow/status/DemienIlnutskiy/flutter_sliver_row/ci.yaml?event=pull_request&label=Code%20Analysis%20%26%20Formatting&logo=github" 
+        alt="Code Analysis & Formatting">
+  </a>
+</p>

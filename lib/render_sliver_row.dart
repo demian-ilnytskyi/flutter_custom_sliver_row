@@ -238,6 +238,10 @@ class RenderSliverRow extends RenderSliver
         sizeZeroList.add(childState);
       }
     }
+    assert(
+      itemsSize <= fullAvailableWidth,
+      'Total size of SliverRow children ($itemsSize) exceeds the available width ($fullAvailableWidth).',
+    );
 
     // If there are children without an explicit size, distribute the
     // remaining width evenly.

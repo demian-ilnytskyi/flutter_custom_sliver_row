@@ -34,7 +34,7 @@ void main() {
     await initTest(
       tester: tester,
       sliver: SliverRow(
-        chilrden: const [
+        children: const [
           SliverRowModel(
             child: SliverToBoxAdapter(
               child: Center(
@@ -112,7 +112,7 @@ void main() {
     await initTest(
       tester: tester,
       sliver: SliverRow(
-        chilrden: const [
+        children: const [
           SliverRowModel(
             child: SliverToBoxAdapter(
               child: Center(
@@ -161,7 +161,7 @@ void main() {
     await initTest(
       tester: tester,
       sliver: SliverRow(
-        chilrden: [
+        children: [
           SliverRowModel(
             child: SliverToBoxAdapter(
               child: Center(
@@ -253,7 +253,7 @@ void main() {
         valueListenable: value,
         builder: (BuildContext context, double value, child) {
           return SliverRow(
-            chilrden: [
+            children: [
               SliverRowModel(
                 child: const SliverToBoxAdapter(
                   child: Center(
@@ -321,7 +321,7 @@ void main() {
     await initTest(
       tester: tester,
       sliver: SliverRow(
-        chilrden: const [],
+        children: const [],
       ),
     );
 
