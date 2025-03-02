@@ -1,5 +1,5 @@
 name: custom_sliver_row
-description: "Sliver"
+description: "Custom Sliver Row arranges children in a CustomScrollView, replacing SliverCrossAxisGroup on Flutter <3.10."
 version: 1.0.0
 homepage:
 
