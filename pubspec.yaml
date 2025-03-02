@@ -1,6 +1,6 @@
-name: sliver_row
+name: custom_sliver_row
 description: "Sliver"
-version: 0.0.1
+version: 1.0.0
 homepage:
 
 environment:

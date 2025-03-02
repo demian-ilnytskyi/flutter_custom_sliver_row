@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/rendering.dart';
-import 'package:sliver_row/sliver_row.dart';
+import 'package:custom_sliver_row/custom_sliver_row.dart';
 
 /// Internal model used by [RenderSliverRow] to store the size configuration.
 ///
-/// This is similar to [SliverRowModel] but without the child widget.
+/// This is similar to [CustomSliverRowModel] but without the child widget.
 class SliverRowSize {
   /// Creates an instance of [SliverRowSize] with the given size parameters.
   const SliverRowSize({
@@ -238,6 +238,10 @@ class RenderSliverRow extends RenderSliver
         sizeZeroList.add(childState);
       }
     }
+    assert(
+      itemsSize <= fullAvailableWidth,
+      'Total size of SliverRow children ($itemsSize) exceeds the available width ($fullAvailableWidth).',
+    );
 
     // If there are children without an explicit size, distribute the
     // remaining width evenly.

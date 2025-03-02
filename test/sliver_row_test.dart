@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sliver_row/sliver_row.dart';
+import 'package:custom_sliver_row/custom_sliver_row.dart';
 
 void main() {
   const widget1Key = Key('widget_1_key');
@@ -34,7 +34,7 @@ void main() {
     await initTest(
       tester: tester,
       sliver: SliverRow(
-        chilrden: const [
+        children: const [
           SliverRowModel(
             child: SliverToBoxAdapter(
               child: Center(
@@ -112,7 +112,7 @@ void main() {
     await initTest(
       tester: tester,
       sliver: SliverRow(
-        chilrden: const [
+        children: const [
           SliverRowModel(
             child: SliverToBoxAdapter(
               child: Center(
@@ -161,7 +161,7 @@ void main() {
     await initTest(
       tester: tester,
       sliver: SliverRow(
-        chilrden: [
+        children: [
           SliverRowModel(
             child: SliverToBoxAdapter(
               child: Center(
@@ -253,7 +253,7 @@ void main() {
         valueListenable: value,
         builder: (BuildContext context, double value, child) {
           return SliverRow(
-            chilrden: [
+            children: [
               SliverRowModel(
                 child: const SliverToBoxAdapter(
                   child: Center(
@@ -321,7 +321,7 @@ void main() {
     await initTest(
       tester: tester,
       sliver: SliverRow(
-        chilrden: const [],
+        children: const [],
       ),
     );
 

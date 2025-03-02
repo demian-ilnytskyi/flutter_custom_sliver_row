@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:sliver_row/render_sliver_row.dart';
+import 'package:custom_sliver_row/render_sliver_row.dart';
 
 /// A model that describes a row in a Sliver layout.
 ///
@@ -46,24 +46,25 @@ class SliverRowModel {
 class SliverRow extends MultiChildRenderObjectWidget {
   /// Creates a [SliverRow] widget.
   ///
-  /// The [chilrden] parameter is a list of [SliverRowModel] objects.
+  /// The [children] parameter is a list of [SliverRowModel] objects.
   /// Each model contains the child widget and its size configuration.
   ///
   /// The constructor generates a list of child widgets for the superclass
-  /// by mapping over the provided [chilrden] list.
+  /// by mapping over the provided [children] list.
   SliverRow({
-    required this.chilrden,
+    required List<SliverRowModel> children,
     Key? key,
-  }) : super(
+  })  : _children = children,
+        super(
           key: key,
           children: List.generate(
-            chilrden.length,
-            (index) => chilrden.elementAt(index).child,
+            children.length,
+            (index) => children.elementAt(index).child,
           ),
         );
 
   /// The list of SliverRowModels, each describing a child widget and its size.
-  final List<SliverRowModel> chilrden;
+  final List<SliverRowModel> _children;
 
   /// Creates the custom render object for this sliver.
   ///
@@ -74,9 +75,9 @@ class SliverRow extends MultiChildRenderObjectWidget {
   RenderSliverRow createRenderObject(BuildContext context) {
     return RenderSliverRow(
       sizes: List.generate(
-        chilrden.length,
+        _children.length,
         (index) {
-          final item = chilrden.elementAt(index);
+          final item = _children.elementAt(index);
           return SliverRowSize(percent: item.percent, size: item.size);
         },
       ),
@@ -91,9 +92,9 @@ class SliverRow extends MultiChildRenderObjectWidget {
   void updateRenderObject(BuildContext context, RenderSliverRow renderObject) {
     renderObject
       ..sizesValue = List.generate(
-        chilrden.length,
+        _children.length,
         (index) {
-          final item = chilrden.elementAt(index);
+          final item = _children.elementAt(index);
           return SliverRowSize(percent: item.percent, size: item.size);
         },
       )
