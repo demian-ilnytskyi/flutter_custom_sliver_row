@@ -149,12 +149,10 @@ class RenderSliverRow extends RenderSliver
     if (!(geometry?.visible ?? false)) return;
     if (_childrenState == null) return; // No children to paint.
 
+    double currentXOffset = 0;
     for (final childState in _childrenState!) {
-      final parentData = childState.sliver.parentData;
-      if (parentData is _SliverRowParentData) {
-        // Paint the child at its calculated offset.
-        context.paintChild(childState.sliver, offset + parentData.paintOffset);
-      }
+      context.paintChild(childState.sliver, offset + Offset(currentXOffset, 0));
+      currentXOffset += childState.size ?? 0;
     }
   }
 
@@ -171,21 +169,21 @@ class RenderSliverRow extends RenderSliver
     if (_childrenState == null) return false;
 
     double currentXOffset = 0;
-    for (final child in _childrenState!) {
-      if (child.sliver.geometry?.visible ?? false) {
-        // Adjust the cross axis position relative to the current child.
-        final adjustedCrossAxisPosition = crossAxisPosition - currentXOffset;
+    for (final childState in _childrenState!) {
+      // if (child.sliver.geometry?.visible ?? false) {
+      // Adjust the cross axis position relative to the current child.
+      final adjustedCrossAxisPosition = crossAxisPosition - currentXOffset;
 
-        // Check if the hit falls within the child's area.
-        if (child.sliver.hitTest(
-          result,
-          mainAxisPosition: mainAxisPosition,
-          crossAxisPosition: adjustedCrossAxisPosition,
-        )) {
-          return true; // Stop once a hit is detected.
-        }
-        currentXOffset += child.size ?? 0;
+      // Check if the hit falls within the child's area.
+      if (childState.sliver.hitTest(
+        result,
+        mainAxisPosition: mainAxisPosition,
+        crossAxisPosition: adjustedCrossAxisPosition,
+      )) {
+        return true; // Stop once a hit is detected.
       }
+      currentXOffset += childState.size ?? 0;
+      // }
     }
     return false;
   }
@@ -209,6 +207,10 @@ class RenderSliverRow extends RenderSliver
     // constraints.
     final fullAvailableWidth = constraints.crossAxisExtent;
 
+    // Sum up the sizes of children that have an explicit size.
+    double itemsSize = 0;
+    final sizeZeroList = <_ChildSliverState>[];
+
     // Iterate over all children and calculate their size.
     for (var i = 0; i < childCount; i++) {
       if (currentSliver == null) break;
@@ -224,20 +226,16 @@ class RenderSliverRow extends RenderSliver
         // If neither is provided, leave size as null.
         size = null;
       }
-      childsState.add(_ChildSliverState(sliver: currentSliver, size: size));
+      final childState = _ChildSliverState(sliver: currentSliver, size: size);
+      childsState.add(childState);
+      if (size == null) {
+        sizeZeroList.add(childState);
+      } else {
+        itemsSize += size;
+      }
       currentSliver = childAfter(currentSliver);
     }
 
-    // Sum up the sizes of children that have an explicit size.
-    double itemsSize = 0;
-    final sizeZeroList = <_ChildSliverState>[];
-    for (final childState in childsState) {
-      if (childState.size != null) {
-        itemsSize += childState.size!;
-      } else {
-        sizeZeroList.add(childState);
-      }
-    }
     assert(
       itemsSize <= fullAvailableWidth,
       'Total size of SliverRow children ($itemsSize) exceeds the available width ($fullAvailableWidth).',
