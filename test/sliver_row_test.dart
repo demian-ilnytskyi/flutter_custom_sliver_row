@@ -265,12 +265,12 @@ void main() {
                 ),
                 size: value,
               ),
-              const SliverRowModel(
-                child: SliverToBoxAdapter(
-                  child: Center(
-                    child: Text(
-                      'test_2',
-                      key: widget2Key,
+              SliverRowModel(
+                child: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => Text(
+                      'example_$index',
+                      key: index == 0 ? widget2Key : null,
                     ),
                   ),
                 ),

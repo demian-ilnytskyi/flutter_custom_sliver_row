@@ -122,7 +122,7 @@ class RenderSliverRow extends RenderSliver
       // Increase the offset by the child's size (or 0 if null).
       currentXOffset += childState.size ?? 0;
       maxChildHeight =
-          max(maxChildHeight, childState.sliver.geometry?.paintExtent ?? 0);
+          max(maxChildHeight, childState.sliver.geometry?.maxPaintExtent ?? 0);
     }
 
     // Determine the paint extent based on the available constraints.
