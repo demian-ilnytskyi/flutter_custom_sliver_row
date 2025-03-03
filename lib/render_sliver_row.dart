@@ -101,6 +101,7 @@ class RenderSliverRow extends RenderSliver
     // Get the state of all children, including their calculated sizes.
     final childsState = _getChildsState();
     double currentXOffset = 0;
+    double maxChildHeight = 0;
 
     // Layout each child sliver using the calculated size as the cross
     // axis extent.
@@ -120,19 +121,20 @@ class RenderSliverRow extends RenderSliver
 
       // Increase the offset by the child's size (or 0 if null).
       currentXOffset += childState.size ?? 0;
+      maxChildHeight =
+          max(maxChildHeight, childState.sliver.geometry?.paintExtent ?? 0);
     }
 
     // Determine the paint extent based on the available constraints.
-    final paintExtent = min(constraints.remainingPaintExtent, currentXOffset);
+    final paintExtent = min(constraints.remainingPaintExtent, maxChildHeight);
 
     // Set the geometry for this sliver so that scrolling and painting work
     // correctly.
     geometry = SliverGeometry(
-      scrollExtent: currentXOffset,
+      scrollExtent: maxChildHeight,
       paintExtent: paintExtent,
       layoutExtent: paintExtent,
-      maxPaintExtent: currentXOffset,
-      cacheExtent: currentXOffset,
+      maxPaintExtent: maxChildHeight,
     );
 
     // Cache the calculated children state for use during painting
