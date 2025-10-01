@@ -1,10 +1,10 @@
 # SliverRow
 <p align="center">
   <a href="https://pub.dev/packages/custom_sliver_row"><img src="https://img.shields.io/pub/v/custom_sliver_row" alt="pub"></a>
-  <a href="https://app.codecov.io/github/DemienIlnutskiy/flutter_custom_sliver_row"><img src="https://img.shields.io/codecov/c/github/DemienIlnutskiy/flutter_custom_sliver_row" alt="pub"></a>
-  <a href="https://github.com/DemienIlnutskiy/flutter_custom_sliver_row/actions/workflows/generate_code_coverate.yaml"><img src="https://img.shields.io/github/actions/workflow/status/DemienIlnutskiy/flutter_custom_sliver_row/generate_code_coverate.yaml?event=push&branch=main&label=tests&logo=github" alt="tests"></a>
-  <a href="https://github.com/DemienIlnutskiy/flutter_custom_sliver_row/actions/workflows/ci.yaml">
-    <img src="https://img.shields.io/github/actions/workflow/status/DemienIlnutskiy/flutter_custom_sliver_row/ci.yaml?event=pull_request&label=Code%20Analysis%20%26%20Formatting&logo=github" 
+  <a href="https://app.codecov.io/github/demian-ilnytskyi/flutter_custom_sliver_row"><img src="https://img.shields.io/codecov/c/github/demian-ilnytskyi/flutter_custom_sliver_row" alt="pub"></a>
+  <a href="https://github.com/demian-ilnytskyi/flutter_custom_sliver_row/actions/workflows/generate_code_coverate.yaml"><img src="https://img.shields.io/github/actions/workflow/status/demian-ilnytskyi/flutter_custom_sliver_row/generate_code_coverate.yaml?event=push&branch=main&label=tests&logo=github" alt="tests"></a>
+  <a href="https://github.com/demian-ilnytskyi/flutter_custom_sliver_row/actions/workflows/ci.yaml">
+    <img src="https://img.shields.io/github/actions/workflow/status/demian-ilnytskyi/flutter_custom_sliver_row/ci.yaml?event=pull_request&label=Code%20Analysis%20%26%20Formatting&logo=github" 
         alt="Code Analysis & Formatting">
   </a>
 </p>
@@ -28,8 +28,8 @@ This package replaces Flutter's official SliverCrossAxisGroup widget.
 
 ## Preview
 
-<a href="https://github.com/DemienIlnutskiy/flutter_custom_sliver_row/blob/main/assets/read_me/preview.gif">
-  <img src="https://raw.githubusercontent.com/DemienIlnutskiy/flutter_custom_sliver_row/main/assets/read_me/preview.gif" alt="preview">
+<a href="https://github.com/demian-ilnytskyi/flutter_custom_sliver_row/blob/main/assets/read_me/preview.gif">
+  <img src="https://raw.githubusercontent.com/demian-ilnytskyi/flutter_custom_sliver_row/main/assets/read_me/preview.gif" alt="preview">
 </a>
 
 ## Overview
